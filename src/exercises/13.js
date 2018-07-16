@@ -1,7 +1,9 @@
 import React from 'react'
-// import hoistNonReactStatics from 'hoist-non-react-statics'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 import * as redux from 'redux'
 import {Switch} from '../switch'
+
+const RenduxContext = React.createContext({})
 
 class Rendux extends React.Component {
   // I'll give you some of this because it's kinda redux-specific stuff
@@ -32,15 +34,30 @@ class Rendux extends React.Component {
   componentWillUnmount() {
     this.unsubscribe()
   }
+  static Consumer = RenduxContext.Consumer
+  initialState = {
+    state: this.props.initialState,
+    reset: this.reset,
+    dispatch: this.store.dispatch
+  }
+  state = this.initialState
   render() {
     // this is your job!
-    return 'todo'
+    return <RenduxContext.Provider value={this.state}>
+      { typeof this.props.children === 'function' ? this.props.children(this.state) : this.props.children }
+    </RenduxContext.Provider>
   }
 }
 
-function withRendux() {
+function withRendux(Component) {
   // this is your job too!
-  return () => null
+  const Wrapper = (props, ref) => {
+    return <Rendux.Consumer>
+      {(rendux) => <Component {...props} rendux={rendux} ref={ref} />}
+    </Rendux.Consumer>
+  }
+  Wrapper.displayName = (`withRendux(${Component.displayName || Component.name})`)
+  return hoistNonReactStatics(React.forwardRef(Wrapper), Component)
 }
 
 /////////////////////////////////////////////////////////

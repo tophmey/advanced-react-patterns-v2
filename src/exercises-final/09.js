@@ -12,10 +12,6 @@ class Toggle extends React.Component {
     onReset: () => {},
     stateReducer: (state, changes) => changes,
   }
-  // 💰 any time I use a string as an identifier for a type,
-  // I prefer to give it a variable name. That way folks who
-  // want to reference the type can do so using variable which
-  // will help mitigate the problems of indirection.
   static stateChangeTypes = {
     reset: '__toggle_reset__',
     toggle: '__toggle_toggle__',
@@ -24,19 +20,14 @@ class Toggle extends React.Component {
   state = this.initialState
   internalSetState(changes, callback) {
     this.setState(state => {
-      // handle function setState call
       const changesObject =
         typeof changes === 'function' ? changes(state) : changes
-
-      // apply state reducer
       const reducedChanges =
         this.props.stateReducer(state, changesObject) || {}
 
-      // remove the type so it's not set into state
       const {type: ignoredType, ...onlyChanges} = reducedChanges
-
-      // return null if there are no changes to be made
       return Object.keys(onlyChanges).length ? onlyChanges : null
+
     }, callback)
   }
 

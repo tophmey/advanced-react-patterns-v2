@@ -1,8 +1,8 @@
 import React from 'react'
 import {Switch} from '../switch'
 import {renderToggle} from '../../test/utils'
-import Usage, {Toggle} from '../exercises-final/11'
-// import Usage, {Toggle} from '../exercises/11'
+// import Usage, {Toggle} from '../exercises-final/11'
+import Usage, {Toggle} from '../exercises/11'
 
 test('renders a toggle component', () => {
   const {toggleButton, toggle, container} = renderToggle(<Usage />)

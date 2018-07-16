@@ -5,8 +5,8 @@ import {
 } from 'react-dom/test-utils'
 import chalk from 'chalk'
 import {renderToggle} from '../../test/utils'
-import Usage, {Debug} from '../exercises-final/12'
-// import Usage, {Debug} from '../exercises/12'
+// import Usage, {Debug} from '../exercises-final/12'
+import Usage, {Debug} from '../exercises/12'
 
 const findDebugInstance = (rootInstance, child) =>
   findAllInRenderedTree(rootInstance, c => {

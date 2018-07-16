@@ -4,29 +4,19 @@ import React from 'react'
 import {Switch} from '../switch'
 
 class Toggle extends React.Component {
-  state = {on: false}
-  toggle = () =>
+  state = { on: false }
+
+  handleToggle = () => {
     this.setState(
-      ({on}) => ({on: !on}),
-      () => this.props.onToggle(this.state.on),
+      ({ on }) => ({ on: !on }),
+      () => this.props.onToggle(this.state.on)
     )
-  getStateAndHelpers() {
-    return {
-      on: this.state.on,
-      toggle: this.toggle,
-      // In our last usage example, you'll notice that we had some
-      // common props (`onClick`, and we're also missing `aria-expanded`
-      // value on the `button`). Because most users will want these
-      // props applied to the button they render, we can add a collection
-      // of props as a convenience for them.
-      //
-      // 🐨 Add a `togglerProps` object that has an `aria-expanded` (should
-      // be set to the value of the `on` state), and an `onClick` assigned
-      // to the toggle function.
-    }
   }
+
+  togglerProps = {}
+
   render() {
-    return this.props.children(this.getStateAndHelpers())
+    return this.props.children({ on: this.state.on, toggle: this.toggle, togglerProps: { onClick: this.handleToggle, 'aria-expanded': this.state.on } })
   }
 }
 

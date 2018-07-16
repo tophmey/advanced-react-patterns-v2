@@ -1,7 +1,7 @@
 // Higher Order Components
 
 import React from 'react'
-// import hoistNonReactStatics from 'hoist-non-react-statics'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 import {Switch} from '../switch'
 
 const ToggleContext = React.createContext({
@@ -122,7 +122,13 @@ class Toggle extends React.Component {
 }
 
 function withToggle(Component) {
-  return Component
+  const Wrapper = (props, ref) => {
+    return (<Toggle.Consumer>
+      {(toggle) => <Component {...props} toggle={toggle} ref={ref} />}
+    </Toggle.Consumer>)
+  }
+  Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
+  return hoistNonReactStatics(React.forwardRef(Wrapper), Component)
   // The `withToggle` function is called a "Higher Order Component"
   // It's another way to share code and allows you to statically
   // create new components to render.

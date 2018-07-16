@@ -1,7 +1,7 @@
 import React from 'react'
 import {renderToggle, Simulate} from '../../test/utils'
-import Usage from '../exercises-final/13'
-// import Usage from '../exercises/13'
+// import Usage from '../exercises-final/13'
+import Usage from '../exercises/13'
 
 function renderRendux() {
   const utils = renderToggle(<Usage />)
